@@ -13,9 +13,7 @@
 
 use Illuminate\Support\Facades\Input;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('commits/{commitshash}', 'DiffController@index');
 
 Route::auth();
 Route::post('register', 'Auth\AuthController@sendConfMail');
