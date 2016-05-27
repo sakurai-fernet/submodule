@@ -13,7 +13,7 @@ class PasswordSettingRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,6 @@ class PasswordSettingRequest extends Request
         return [
             //
         'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9-_.!"#$%&7\'()=~\/\^\\\@;:\[\]\{\}\+\*>\?,` ]+$/',
-	'name' => 'required|min:4|max:20',
         ];
     }
     public function validator($factory)
@@ -40,7 +39,7 @@ class PasswordSettingRequest extends Request
 
         $validator->after(function($validator) {
             $password = $this->input('password');
-            if (strpos($password,'&{') != false)
+            if (strpos($password,'&{') != false or strpos($password,'<') !== false)
                 $validator->errors()->add('password', trans('register.cantusename'));
         });
             return $validator;
