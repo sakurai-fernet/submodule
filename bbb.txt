@@ -13,7 +13,7 @@ class PasswordSettingRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -26,7 +26,7 @@ class PasswordSettingRequest extends Request
         return [
             //
         'password' => 'required|min:6|confirmed|regex:/^[a-zA-Z0-9-_.!"#$%&7\'()=~\/\^\\\@;:\[\]\{\}\+\*>\?,` ]+$/',
-
+	'name' => 'required|min:4|max:20',
         ];
     }
     public function validator($factory)
