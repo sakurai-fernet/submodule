@@ -1,8 +1,0 @@
-test
-tester
-teston
-
-git diff 				workingtree  index
-git diff --cached		index  HEAD
-git diff HEAD			index  HEAD
-git diff HEAD^..HEAD	HEAD HEAD^
