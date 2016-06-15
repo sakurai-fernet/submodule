@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use Git;
+
+class CommitsController extends Controller
+{
+    public function index(Request $request, $repoName, $branchName) {
+        $repo = $request->input('repo');
+
+        Git::cd($repo->name);
+
+        $page         = $request->input('page', 1);
+        $countPerPage = 50;
+        $logs         = Git::getLog($branchName, '', $page, $countPerPage);
+        $logCount     = Git::countCommits($branchName);
+        // Ÿ‚Ìƒy[ƒW‚ª‘¶İ‚·‚é‚©’²‚×‚é
+        $existNextPage = $countPerPage * ($page - 1) + count($logs) < $logCount;
+
+        return view('commits', [
+            'repo'          => $repo,
+            'branchName'    => $branchName,
+            'logs'          => $logs,
+            'existNextPage' => $existNextPage,
+            'page'          => $page,
+        ]);
+    }
+}
