@@ -16,11 +16,7 @@ class PasswordSettingRequest extends Request
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+
     public function rules()
     {
         return [
@@ -32,15 +28,16 @@ class PasswordSettingRequest extends Request
     {
         $validator = $factory->make(
                 $this->all(),
-                $this->rules(),
-                $this->messages(),
-                $this->attributes()
+                $this->rule(),
+                $this->message(),
+                $this->attribute()
                 );
 
         $validator->after(function($validator) {
             $password = $this->input('password');
             if (strpos($password,'&{') != false or strpos($password,'<') !== false)
                 $validator->errors()->add('password', trans('register.cantusename'));
+				$validator;
         });
             return $validator;
     }
